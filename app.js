@@ -78,11 +78,12 @@ app.get('/uploads', (req, files) => {
 });
 
 function remove (file)  {
-    fs.unlink('./public/uploads/' + file);
+    fs.unlinkSync('./public/uploads/' + file);
 }
 
-app.get('/delete/', function (req, res) {
-
+app.get('/delete/:file', (req, res) => {
+    remove(req.params.file);
+    res.redirect("/");
 });
 /*
 app.get('/delete/:id', (req, res) => {
