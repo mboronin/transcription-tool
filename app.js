@@ -75,11 +75,13 @@ app.get('/uploads', (req, files) => {
         //listing all files using forEach
         res.render('index', {
             files: files
-        })
+        });
     });
 });
 
-function remove (file)  {
+
+
+function remove(file) {
     fs.unlinkSync('./public/uploads/' + file);
 }
 
