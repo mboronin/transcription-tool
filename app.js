@@ -6,6 +6,8 @@ const fs = require('fs');
 const app = express();
 const port = 5000;
 const http = require('http');
+var jsdom = require('jsdom');
+$ = require('jquery')(new jsdom.JSDOM().window);
 // Set view engine
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/js')); // This line.
@@ -34,7 +36,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     limits: {
-        fileSize: 1000000
+        fileSize: 30000000
     },
     fileFilter: function (req, file, cb) {
         sanitizeFile(file, cb);

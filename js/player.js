@@ -1,6 +1,8 @@
 var audio;
-
 //hide pause button
+
+$('#pause').hide();
+$('#duration').hide();
 
 //Initialize
 initAudio($('#playlist li:first-child'));
@@ -14,7 +16,7 @@ function initAudio(element){
 
 
     //Create AUDIO OBJECT
-    audio = new Audio('http://localhost/beats/wp-content/themes/AG_1/html_5_audio_player/media/' + song);
+    audio = new Audio(song);
 
     if(!audio.currentTime) {
         $('#duration').html('0.00');
@@ -104,23 +106,6 @@ $('#next').click(function(){
     }
 });
 
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
-}
-
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
-
 //PREV Buttomn 
 
 $('#prev').click(function(){
@@ -166,4 +151,4 @@ function showDuration(){
     });
 }
 
-// DOWNLOAD POP UP SCRIPT   
+// DOWNLOAD POP UP SCRIPT
