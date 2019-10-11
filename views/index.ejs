@@ -42,10 +42,6 @@
                     </div>
                 </form>
                 <hr>
-                <div id="audio-img">
-                    <img class="cover">
-                </div>
-                <div id="audio-player">
                     <script>
                         document.addEventListener("keyup", startloopKb, false);
 
@@ -135,13 +131,13 @@
 
                                     <div class="form-check">
                                         <% files.forEach(function(file) { %>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-
+                                        <li class="list-group-item d-flex justify-content-between">
+                                             <div class="float-left w-50">
                                             <input type="radio" name="song" id="<%=file%>" value="<%=file%>"
                                                 onclick="selectSong()">
-                                            <label class="text" class="col-sm-2"><%=file%></label>
-                                            <div class="float-sm-right"><a href="/delete/<%= file %>"><button
-                                                        class="btn btn-danger" name="complete" value="0">
+                                            <label class="text"><%=file%></label></div>   
+                                            <div class="float-right"><a href="/delete/<%= file %>"><button
+                                                        class="btn btn-danger float-right" name="complete" value="0">
                                                         Delete
                                                     </button></a></div>
                                         </li>
@@ -156,7 +152,6 @@
                     <p>No files to show</p>
                     <% } %>
                 </div>
-            </div>
         </div>
     </div>
 
