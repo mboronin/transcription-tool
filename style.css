@@ -71,10 +71,10 @@
   
   /* Style the header */
   .header {
-    background-color: #f44336;
-    padding: 30px 40px;
-    color: white;
     text-align: center;
+    background: black;
+    color: white;
+}
   }
   
   /* Clear floats after the header */

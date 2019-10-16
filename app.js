@@ -66,7 +66,7 @@ function sanitizeFile(file, cb) {
     }
 }
 
-app.get('/uploads', (req, files) => {
+app.get('/uploads', (req, res) => {
     fs.readdir(__dirname + "/public/uploads", function (err, files) {
         //handling error
         if (err) {

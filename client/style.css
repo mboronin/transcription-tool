@@ -70,12 +70,11 @@
   }
   
   /* Style the header */
-  .header {
-    background-color: #f44336;
-    padding: 30px 40px;
-    color: white;
+.header {
     text-align: center;
-  }
+    background-color: black;
+    color: white;
+}
   
   /* Clear floats after the header */
   .header:after {
@@ -83,6 +82,18 @@
     display: table;
     clear: both;
   }
+
+
+.colbl {
+    background-color: #343a40;
+}
+
+.footer {
+    background-color: black;
+    position: fixed;
+    bottom: 0;
+}
+
   
   /* Style the input */
   input {
@@ -112,3 +123,14 @@
   .addBtn:hover {
     background-color: #bbb;
   }
+
+.button {
+    background-color: royalblue;
+    border: 1px solid black;
+    border-radius: 8px;
+    color: black;
+    padding: 1px 10px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
