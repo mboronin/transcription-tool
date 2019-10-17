@@ -3,38 +3,32 @@
 <html lang="en">
 
   <head>
-    <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-          <link href="./client/style.css" type="text/css"/>
-          <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
-          <title>CocoTranscript</title>
-
-
-
-
-
-        </head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+    <link href="./client/style.css" type="text/css"/>
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+    <title>CocoTranscript</title>
+  </head>
 
   <body>
 
 
     <div class="container-fluid">
-
-      <div class="row text-white bg-dark" style="height:100px width:100%">
-        <h1>Transcription tool</h1>
-        <br/>
-        <p>For transcribing audio files</p>
+      <div class="row bg-dark text-white" style="height:100px">
+        <div class="col-sm-12 text-center" >
+          <h1>Transcription tool</h1>
+          <p>For transcribing audio files</p>
+        </div>
       </div>
-
 
 
 
       <div class="row bg-secondary">
         <div id="audio-controls">
           <div class="form-inline">
-            <hr>
+            <hr/>
             <form method="POST" action="/upload" enctype="multipart/form-data">
 
               <%= typeof msg != 'undefined' ? msg : '' %>
@@ -42,31 +36,44 @@
 
               <input type="file" class="btn btn-light" name="files"  id="exampleFormControlFile1"/>
 
-                <input type="text" class="form-control"" id=" exampleFormControlInput1="" placeholder="Link to file"/>
+              <input type="text" class="form-control"" id=" exampleFormControlInput1="" placeholder="Link to file"/>
 
 
 
 
-                  <button type="submit" class="btn btn-light">Upload</button>
+              <button type="submit" class="btn btn-light rounded-pill">Upload</button>
 
 
 
-                </form>
+            </form>
 
-            <label for="loopy" class="btn btn-light">Repeat seconds: </label>
-            <input class="input-group mr-2" size="1" type="text" id="loopy" value="5"/x>
-              <button class="btn btn-light" onclick="loop_select()">Start loop</button>
-              <button class="btn btn-light" onclick="loop_end()">End loop</button>
-
-              <p class="p1">
-                Play speed: <select name="Play speed">
-                  <option value="half" onclick="speed_half()"> 0,5x</option>
-                  <option selected="" value="normal" onclick="speed_normal()">1x</option>
-                  <option value="oneandhalf" onclick="speed_onehalf()"> 1.5x</option>
-                  <option value="two" onclick="speed_two()"> 2x</option>
-                </select>
-              </p>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Repeat seconds: </span>
+              </div>
+              <input class="form-control" size="1" type="text" id="loopy" value="5"/>
             </div>
+
+
+
+
+            <button class="btn btn-light rounded-pill" onclick="loop_select()">Start loop</button>
+            <button class="btn btn-light rounded-pill" onclick="loop_end()">End loop</button>
+
+            <div class="dropdown">
+              <button class="btn btn-light dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Playback speed
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <option value="half" onclick="speed_half()"> 0,5x</option>
+                <option value="normal" onclick="speed_normal()">1x</option>
+                <option value="oneandhalf" onclick="speed_onehalf()"> 1.5x</option>
+                <option value="two" onclick="speed_two()"> 2x</option>
+              </div>
+            </div>
+
+
+          </div>
 
           <script>
             document.addEventListener("keyup", startloopKb, false);
@@ -125,7 +132,7 @@
                               clearInterval(inter);
                           }
           </script>
-          <hr>
+          <hr/>
         </div>
       </div>
 
@@ -157,7 +164,7 @@
                         <div class="float-sm-right">
                           <a href="/delete/"
                             <%= file %>"><button
-                              class="btn btn-danger" name="complete" value="0">
+    class="btn btn-danger" name="complete" value="0">
                               Delete
                             </button>
                           </a>
@@ -195,7 +202,7 @@
 
 
       </div>
-      <div class="row fixed-bottom">
+      <div class="row fixed-bottom bg-dark" style="height:60px">
         <audio controls="" id="audio" style="width: 100%">
           <source id="songselector" src="./uploads/"<%=files[0]%>">
         </audio>
