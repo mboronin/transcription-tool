@@ -2,220 +2,227 @@
 
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-            <link rel="stylesheet" href="/public/style.css">
-          <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
-          <title>CocoTranscript</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="/public/style.css">
+  <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+  <title>CocoTranscript</title>
+</head>
 
 
+<body>
 
 
-
-        </head>
-
-  <body>
-
-
-    <div class="container-fluid">
-
-      <div class="row text-white bg-dark" style="height:100px width:100%">
+  <div class="container-fluid">
+    <div class="row bg-dark text-white" style="height:100px">
+      <div class="col-sm-12 text-center">
         <h1>Transcription tool</h1>
-        <br/>
         <p>For transcribing audio files</p>
       </div>
+    </div>
+
+
+
+    <div class="row bg-secondary">
+      <div id="audio-controls">
+        <div class="form-inline">
+          <hr />
+          <form method="POST" action="/upload" enctype="multipart/form-data">
+
+            <%= typeof msg != 'undefined' ? msg : '' %>
+
+
+            <input type="file" class="btn btn-light" name="files" id="exampleFormControlFile1" />
+
+            <input type="text" class="form-control"" id=" exampleFormControlInput1="" placeholder="Link to file" />
 
 
 
 
-      <div class="row bg-secondary">
-        <div id="audio-controls">
-          <div class="form-inline">
-            <hr>
-            <form method="POST" action="/upload" enctype="multipart/form-data">
-
-              <%= typeof msg != 'undefined' ? msg : '' %>
-
-
-              <input type="file" class="btn btn-light" name="files"  id="exampleFormControlFile1"/>
-
-                <input type="text" class="form-control"" id=" exampleFormControlInput1="" placeholder="Link to file"/>
+            <button type="submit" class="btn btn-light rounded-pill">Upload</button>
 
 
 
+          </form>
 
-                  <button type="submit" class="btn btn-light">Upload</button>
-
-
-
-                </form>
-
-            <label for="loopy" class="btn btn-light">Repeat seconds: </label>
-            <input class="input-group mr-2" size="1" type="text" id="loopy" value="5"/x>
-              <button class="btn btn-light" onclick="loop_select()">Start loop</button>
-              <button class="btn btn-light" onclick="loop_end()">End loop</button>
-
-              <p class="p1">
-                Play speed: <select name="Play speed">
-                  <option value="half" onclick="speed_half()"> 0,5x</option>
-                  <option selected="" value="normal" onclick="speed_normal()">1x</option>
-                  <option value="oneandhalf" onclick="speed_onehalf()"> 1.5x</option>
-                  <option value="two" onclick="speed_two()"> 2x</option>
-                </select>
-              </p>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Repeat seconds: </span>
             </div>
+            <input class="form-control" size="1" type="text" id="loopy" value="5" />
+          </div>
 
-          <script>
-            document.addEventListener("keyup", startloopKb, false);
 
-            function startloopKb(event) {
+
+
+          <button class="btn btn-light rounded-pill" onclick="loop_select()">Start loop</button>
+          <button class="btn btn-light rounded-pill" onclick="loop_end()">End loop</button>
+
+          <div class="dropdown">
+            <button class="btn btn-light dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Playback speed
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <option value="half" onclick="speed_half()"> 0,5x</option>
+              <option value="normal" onclick="speed_normal()">1x</option>
+              <option value="oneandhalf" onclick="speed_onehalf()"> 1.5x</option>
+              <option value="two" onclick="speed_two()"> 2x</option>
+            </div>
+          </div>
+
+
+        </div>
+
+        <script>
+          document.addEventListener("keyup", startloopKb, false);
+
+          function startloopKb(event) {
 
 
             var x = event.keyCode;
             if (x === 67 && event.altKey || x === 99 && event.altKey) {
-            loop_select();
+              loop_select();
 
             } else if (x === 70 && event.altKey || x === 102 && event.altKey) {
-            loop_end();
+              loop_end();
             }
-            }
-            speed_half = function () {
+          }
+          speed_half = function () {
             audio.playbackRate = 0.5;
-            }
-            speed_normal = function () {
+          }
+          speed_normal = function () {
             audio.playbackRate = 1;
-            }
-            speed_onehalf = function () {
+          }
+          speed_onehalf = function () {
             audio.playbackRate = 1.5;
-            }
-            speed_two = function () {
+          }
+          speed_two = function () {
             audio.playbackRate = 2;
-            }
-            function selectSong() {
+          }
+
+          function selectSong() {
             songs = document.getElementsByName('song');
             for (i = 0; i < songs.length; i++) {
-                                  if (songs[i].checked) {
-                                      name = document.getElementsByName('song')[i].value;
-                                  }
-                              }
-                              name = "./uploads/" + name;
-                              document.getElementById("songselector").setAttribute("src", name);
-                              var x = document.getElementById("songselector");
-                              audio.load();
-                              audio.play();
-                          }
+              if (songs[i].checked) {
+                name = document.getElementsByName('song')[i].value;
+              }
+            }
+            name = "./uploads/" + name;
+            document.getElementById("songselector").setAttribute("src", name);
+            var x = document.getElementById("songselector");
+            audio.load();
+            audio.play();
+          }
 
-                          loop_select = function () {
-                              var dur = document.getElementById("audio");
-                              var loopy_value = document.getElementById('loopy').value
-                              var loopy_int = loopy_value * 1000;
+          loop_select = function () {
+            var dur = document.getElementById("audio");
+            var loopy_value = document.getElementById('loopy').value
+            var loopy_int = loopy_value * 1000;
 
-                              var a = dur.currentTime;
-                              var b = a - loopy.value;
-                              audio.currentTime = b;
-                              inter = setInterval(function () {
-                                  audio.currentTime = b;
-                              }, loopy_int)
-                          }
+            var a = dur.currentTime;
+            var b = a - loopy.value;
+            audio.currentTime = b;
+            inter = setInterval(function () {
+              audio.currentTime = b;
+            }, loopy_int)
+          }
 
-                          loop_end = function () {
-                              clearInterval(inter);
-                          }
-          </script>
-          <hr>
-        </div>
+          loop_end = function () {
+            clearInterval(inter);
+          }
+        </script>
+        <hr />
       </div>
-
-      <div class="row">
-
-        <div class="col-sm-3">
-
-
-
-          <div id="audio-player">
-
-
-            <% if(files){ %>
-
-            <ul class="list-group">
-              <div class="form-group row">
-                <fieldset class="form-group">
-                  <div class="row">
-
-                    <div class="form-check">
-                      <% files.forEach(function(file) { %>
-                      <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                        <input type="radio" name="song" id=""<%=file%>" value="<%=file%>"
-                        onclick="selectSong()">
-                        <label class="text" class="col-sm-2">
-                          <%=file%>
-                        </label>
-                        <div class="float-sm-right">
-                          <a href="/delete/"
-                            <%= file %>"><button
-                              class="btn btn-danger" name="complete" value="0">
-                              Delete
-                            </button>
-                          </a>
-                        </div>
-                      </li>
-                      <% }); %>
-                    </div>
-
-                  </div>
-                </fieldset>
-              </div>
-            </ul>
-            <% } else { %>
-            <p>No files to show</p>
-            <% } %>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <textarea name="editor1"></textarea>
-          <script>
-            CKEDITOR.config.height = 500;
-            CKEDITOR.replace('editor1');
-          </script>
-
-        </div>
-
-        <div class="text-center col-sm-3">
-          <div class="header">
-            <h1>Bookmarks</h1>
-            <p>For creating bookmarks</p>
-          </div>
-
-        </div>
-
-
-      </div>
-      <div class="row fixed-bottom">
-        <audio controls="" id="audio" style="width: 100%">
-          <source id="songselector" src="./uploads/"<%=files[0]%>">
-        </audio>
-      </div>
-
     </div>
 
+    <div class="row">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="./js/player.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+      <div class="col-sm-3">
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
 
-  </body>
+
+        <div id="audio-player">
+
+
+          <% if(files){ %>
+
+          <ul class="list-group">
+            <div class="form-group row">
+              <fieldset class="form-group">
+                <div class="row">
+
+                  <div class="form-check">
+                    <% files.forEach(function(file) { %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                      <input type="radio" name="song" id="" <%=file%>" value="<%=file%>" onclick="selectSong()">
+                      <label class="text" class="col-sm-2">
+                        <%=file%>
+                      </label>
+                      <div class="float-sm-right">
+                        <a href="/delete/" <%= file %>"><button class="btn btn-danger" name="complete" value="0">
+                            Delete
+                          </button>
+                        </a>
+                      </div>
+                    </li>
+                    <% }); %>
+                  </div>
+
+                </div>
+              </fieldset>
+            </div>
+          </ul>
+          <% } else { %>
+          <p>No files to show</p>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <textarea name="editor1"></textarea>
+        <script>
+          CKEDITOR.config.height = 500;
+          CKEDITOR.replace('editor1');
+        </script>
+
+      </div>
+
+      <div class="text-center col-sm-3">
+        <div class="header">
+          <h1>Bookmarks</h1>
+          <p>For creating bookmarks</p>
+        </div>
+
+      </div>
+
+
+    </div>
+    <div class="row fixed-bottom bg-dark" style="height:60px">
+      <audio controls="" id="audio" style="width: 100%">
+        <source id="songselector" src="./uploads/" <%=files[0]%>">
+      </audio>
+    </div>
+
+  </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="./js/player.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+
+</body>
 
 </html>
