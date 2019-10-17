@@ -10,8 +10,7 @@ var jsdom = require('jsdom');
 $ = require('jquery')(new jsdom.JSDOM().window);
 // Set view engine
 app.set('view engine', 'ejs')
-app.use(express.static(__dirname + '/js')); // This line.
-app.use(express.static('./public'));
+app.use("/public", express.static(__dirname + '/public')); // This line.
 app.get('/', (req, res) => {
     fs.readdir(__dirname + "/public/uploads", function (err, files) {
         //handling error
