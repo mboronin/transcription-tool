@@ -12,19 +12,14 @@
   <title>CocoTranscript</title>
 </head>
 
-
 <body>
-
-
   <div class="container-fluid">
     <div class="row bg-dark text-white" style="height:100px">
-      <div class="col-sm-12 text-center">
+      <div class="col-12 text-center">
         <h1>Transcription tool</h1>
         <p>For transcribing audio files</p>
       </div>
     </div>
-
-
 
     <div class="row bg-secondary">
       <div id="audio-controls">
@@ -37,7 +32,9 @@
 
             <input type="file" class="btn btn-light" name="files" id="exampleFormControlFile1" />
 
-            <input type="text" class="form-control"" id=" exampleFormControlInput1="" placeholder="Link to file" />
+            <input data-val-regex-pattern="^(https?://)?([\da-z\.-]+)\.([a-z\.]{2,6})([/\w\.-=?&amp;_]*)*/?$"
+              data-val="true" data-val-regex="Enter a valid web adress" id="Documents_0__Link" name="Documents[0].Link"
+              type="text" value="">
 
 
 
