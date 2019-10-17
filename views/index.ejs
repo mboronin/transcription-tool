@@ -9,55 +9,51 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="/public/style.css">
   <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
-  <title>CocoTranscript</title>
+  <title>Transcribe</title>
 </head>
 
 <body>
+  <!--container for the webpage -->
   <div class="container-fluid">
-    <div class="row bg-dark text-white" style="height:100px">
-      <div class="col-12 text-center">
-        <h1>Transcription tool</h1>
+    <!-- creates the row of the header -->  
+    <div class="row header">
+      <div class="col-12">
+        <h1>Transcribe</h1>
         <p>For transcribing audio files</p>
       </div>
     </div>
 
-    <div class="row bg-secondary">
+    <!-- creates the row containing the tools for the audio player -->
+    <div class="row tools
       <div id="audio-controls">
         <div class="form-inline">
-          <hr />
-          <form method="POST" action="/upload" enctype="multipart/form-data">
 
+          <!-- the form for uploading the audio files -->
+          <form method="POST" action="/upload" enctype="multipart/form-data">
             <%= typeof msg != 'undefined' ? msg : '' %>
 
-
-            <input type="file" class="btn btn-light" name="files" id="exampleFormControlFile1" />
-
+            <input type="file" class="btn-light form-control-sm" name="files" id="exampleFormControlFile1" />       
+              
             <input data-val-regex-pattern="^(https?://)?([\da-z\.-]+)\.([a-z\.]{2,6})([/\w\.-=?&amp;_]*)*/?$"
               data-val="true" data-val-regex="Enter a valid web adress" id="Documents_0__Link" name="Documents[0].Link"
-              type="text" value="">
+              type="text" value="" placeholder="Paste URL here" class="btn-light form-control-sm">
 
-
-
-
-            <button type="submit" class="btn btn-light rounded-pill">Upload</button>
-
-
-
+            <button type="submit" class="btn btn-light rounded-pill"><img src="public/images/Upload_1.png" width="30"></img></button>
           </form>
 
+          <!-- input to enter how many seconds the loop function should run -->
           <div class="input-group">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1">Repeat seconds: </span>
+              <span class="input-group-text" id="basic-addon1">Number of seconds to loop: </span>
             </div>
             <input class="form-control" size="1" type="text" id="loopy" value="5" />
           </div>
 
+          <!-- buttons to start and stop the loop function -->
+          <button class="btn btn-light rounded-pill" onclick="loop_select()"><img src="public/images/Loop_1.png" width="30"></img></button>
+          <button class="btn btn-light rounded-pill" onclick="loop_end()"><img src="public/images/Loop_4.png" width="30"></img></button>
 
-
-
-          <button class="btn btn-light rounded-pill" onclick="loop_select()">Start loop</button>
-          <button class="btn btn-light rounded-pill" onclick="loop_end()">End loop</button>
-
+          <!-- dropdown list to change the playback speed -->
           <div class="dropdown">
             <button class="btn btn-light dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton"
               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -71,15 +67,16 @@
             </div>
           </div>
 
-
+          <!-- button for creating a timestamp -->
+          <button type="submit" class="btn btn-light rounded-pill"><img src="public/images/timestamp_2.svg" width="30"></img></button>
         </div>
 
+        <!-- scripts for running the functionalities above -->
         <script>
+
+          <!-- Keyboard shortcut for starting and stopping the looping -->
           document.addEventListener("keyup", startloopKb, false);
-
           function startloopKb(event) {
-
-
             var x = event.keyCode;
             if (x === 67 && event.altKey || x === 99 && event.altKey) {
               loop_select();
@@ -88,6 +85,8 @@
               loop_end();
             }
           }
+          
+          <!-- Changing the playback speed -->
           speed_half = function () {
             audio.playbackRate = 0.5;
           }
@@ -101,6 +100,7 @@
             audio.playbackRate = 2;
           }
 
+          <!-- Play the selected file from the playlist -->
           function selectSong() {
             songs = document.getElementsByName('song');
             for (i = 0; i < songs.length; i++) {
@@ -115,6 +115,7 @@
             audio.play();
           }
 
+          <!-- Get the selected time to loop and start -->
           loop_select = function () {
             var dur = document.getElementById("audio");
             var loopy_value = document.getElementById('loopy').value
@@ -128,22 +129,20 @@
             }, loopy_int)
           }
 
+          <!-- End the loop -->
           loop_end = function () {
             clearInterval(inter);
           }
         </script>
-        <hr />
+        <hr/>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="width:100%">
 
       <div class="col-sm-3">
 
-
-
         <div id="audio-player">
-
 
           <% if(files){ %>
 
@@ -156,7 +155,7 @@
                     <% files.forEach(function(file) { %>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
 
-                      <input type="radio" name="song" id="" <%=file%>" value="<%=file%>" onclick="selectSong()">
+                      <input type="radio" name="song" id="<%=file%>" value="<%=file%>" onclick="selectSong()">
                       <label class="text" class="col-sm-2">
                         <%=file%>
                       </label>
@@ -190,16 +189,13 @@
       </div>
 
       <div class="text-center col-sm-3">
-        <div class="header">
           <h1>Bookmarks</h1>
           <p>For creating bookmarks</p>
-        </div>
-
       </div>
 
 
     </div>
-    <div class="row fixed-bottom bg-dark" style="height:60px">
+    <div class="row fixed-bottom header" style="height:60px">
       <audio controls="" id="audio" style="width: 100%">
         <source id="songselector" src="./uploads/" <%=files[0]%>">
       </audio>
