@@ -117,6 +117,7 @@
 
           <!-- Get the selected time to loop and start -->
           loop_select = function () {
+            clearInterval(inter);
             var dur = document.getElementById("audio");
             var loopy_value = document.getElementById('loopy').value
             var loopy_int = loopy_value * 1000;
