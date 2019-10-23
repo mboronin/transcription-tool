@@ -15,7 +15,7 @@
 
 <body>
   <!--container for the webpage -->
-  <div class="container-fluid">
+  <div class="container-fluid" style="padding-right:0">
     <!-- creates the row of the header -->
     <div class="row header">
       <div class="col-12">
@@ -25,7 +25,7 @@
     </div>
 
     <!-- creates the row containing the tools for the audio player -->
-    <div class="row tools
+    <div class="row tools">
       <div id=" audio-controls">
       <div class="form-inline">
 
@@ -72,43 +72,67 @@
         </div>
 
         <!-- button for creating a timestamp -->
-        <button type="submit" class="btn btn-light rounded-pill"><img src="public/images/timestamp_2.svg"
-            width="30"></img></button>
+        <button type="submit" class="btn btn-light rounded-pill"><img src="public/images/timestamp_2.svg" width="30"></img></button>
+
+        <div class="dropdown">
+
+          <button class="btn btn-light dropdown-toggle rounded-pill" type="button" data-toggle="dropdown">
+            Keyboard shortcuts
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <label>Play: Shift + P </label>
+            <label>Pause: Shift + S </label>
+            <label>Start loop: Shift + C </label>
+            <label>End loop: Shift + F</label>
+          </div>
+        </div>
+        
       </div>
 
       <!-- scripts for running the functionalities above -->
       <script>
-        // Keyboard shortcut for starting and stopping the looping
+        document.addEventListener("keyup", playpause, false);
+        // Keyboard shortcut for play and pause
+        function playpause(event) {
+        var x = event.keyCode;
+        if (x === 112 && event.shiftKey || x === 80 && event.shiftKey) {
+        audio.play();
+
+        } else if (x === 115 && event.shiftkey || x === 83 && event.shiftKey) {
+        audio.pause();
+        }
+        }
+
         document.addEventListener("keyup", startloopKb, false);
-
+        //Keyboardshortcut for repeat mode
         function startloopKb(event) {
-          var x = event.keyCode;
-          if (x === 67 && event.altKey || x === 99 && event.altKey) {
-            loop_select();
+        var x = event.keyCode;
+        if (x === 67 && event.shiftKey || x === 99 && event.shiftKey) {
+        loop_select();
 
-          } else if (x === 70 && event.altKey || x === 102 && event.altKey) {
-            loop_end();
-          }
+        } else if (x === 70 && event.shiftKey || x === 102 && event.shiftKey) {
+        loop_end();
+        }
         }
 
         // Changing the playback speed -->
         speed_half = function () {
-          audio.playbackRate = 0.5;
+        audio.playbackRate = 0.5;
         }
         speed_normal = function () {
-          audio.playbackRate = 1;
+        audio.playbackRate = 1;
         }
         speed_onehalf = function () {
-          audio.playbackRate = 1.5;
+        audio.playbackRate = 1.5;
         }
         speed_two = function () {
-          audio.playbackRate = 2;
+        audio.playbackRate = 2;
         }
 
         // Play the selected file from the playlist -->
         function selectSong() {
-          songs = document.getElementsByName('song');
-          for (i = 0; i < songs.length; i++) {
+        songs = document.getElementsByName('song');
+        for (i = 0; i < songs.length; i++) {
             if (songs[i].checked) {
               name = document.getElementsByName('song')[i].value;
             }
@@ -122,7 +146,6 @@
 
         // Get the selected time to loop and start -->
         loop_select = function () {
-          clearInterval(inter);
           var dur = document.getElementById("audio");
           var loopy_value = document.getElementById('loopy').value
           var loopy_int = loopy_value * 1000;
@@ -144,7 +167,7 @@
     </div>
 
 
-    <div class="row" style="width:100%">
+    <div class="row" style="margin:0px">
 
       <div class="col-sm-3">
 
@@ -155,7 +178,7 @@
           <ul class="list-group">
             <div class="form-group row">
               <fieldset class="form-group">
-                <div class="row">
+                <div class="row" style="margin-right:0px">
 
                   <div class="form-check">
                     <% files.forEach(function(file) { %>
@@ -188,12 +211,12 @@
     </div>
 
 
-      <div id="editor" class="col-6">
+      <div id="editor" class="col-6" style="margin:0px">
         <p>This is the editor content.</p>
       </div>
       <script type="text/javascript" src="ckeditor.js"></script>
       <script>
-        CKEDITOR.config.width = 700;
+        CKEDITOR.config.width = ((screen.width/12)*6)-20;
         CKEDITOR.config.height = 300;
         CKEDITOR.replace('editor');
       </script>
@@ -206,7 +229,7 @@
 
 
     <div class="row fixed-bottom header" style="height:60px">
-      <audio controls="" id="audio" style="width: 100%">
+      <audio controls="" id="audio" style="width: 99%">
         <source id="songselector" src="./public/uploads/" <%=files[0]%>">
       </audio>
     </div>
