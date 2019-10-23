@@ -11,8 +11,10 @@ $ = require('jquery')(new jsdom.JSDOM().window);
 // Set view engine
 app.set('view engine', 'ejs')
 app.use("/public", express.static(__dirname + '/public')); // This line.
+app.use(express.static(path.join(__dirname, 'scripts')))
+app.use(express.static(path.join(__dirname, 'node_modules/ckeditor/')))
 app.get('/', (req, res) => {
-    fs.readdir(__dirname + "/public/uploads", function (err, files) {
+    fs.readdir("./public/uploads", function (err, files) {
         //handling error
         if (err) {
             return console.log('Unable to scan directory: ' + err);
@@ -65,8 +67,8 @@ function sanitizeFile(file, cb) {
     }
 }
 
-app.get('/uploads', (req, res) => {
-    fs.readdir(__dirname + "/public/uploads", function (err, files) {
+app.get('./public/uploads', (req, res) => {
+    fs.readdir("./public/uploads", function (err, files) {
         //handling error
         if (err) {
             return console.log('Unable to scan directory: ' + err);
@@ -88,10 +90,5 @@ app.get('/delete/:file', (req, res) => {
     remove(req.params.file);
     res.redirect("/");
 });
-/*
-app.get('/delete/:id', (req, res) => {
-    {_id: req.params.id}
-    
-  });
-*/
-app.listen(port, () => console.log(`Server started on port ${port}`));
+
+app.listen(port, () => console.log(`Server started on port ${port}`));  

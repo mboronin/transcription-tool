@@ -8,18 +8,23 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="/public/style.css">
-  <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+  <script type="text/javascript" src="ckeditor.js"></script>
   <title>CocoTranscript</title>
 </head>
 
+
 <body>
+
+
   <div class="container-fluid">
     <div class="row bg-dark text-white" style="height:100px">
-      <div class="col-12 text-center">
+      <div class="col-sm-12 text-center">
         <h1>Transcription tool</h1>
         <p>For transcribing audio files</p>
       </div>
     </div>
+
+
 
     <div class="row bg-secondary">
       <div id="audio-controls">
@@ -31,17 +36,11 @@
 
 
             <input type="file" class="btn btn-light" name="files" id="exampleFormControlFile1" />
-
-            <input data-val-regex-pattern="^(https?://)?([\da-z\.-]+)\.([a-z\.]{2,6})([/\w\.-=?&amp;_]*)*/?$"
-              data-val="true" data-val-regex="Enter a valid web adress" id="Documents_0__Link" name="Documents[0].Link"
-              type="text" value="">
-
-
-
+            <input class="form-control" id="exampleFormControlInput1=" placeholder="Link to file"
+              data-val-regex-pattern="^(https?://)?([\da-z\.-]+)\.([a-z\.]{2,6})([/\w\.-=?&amp;_]*)*/?$" data-val="true"
+              data-val-regex="Enter a valid" id="Documents_0__Link" name="Documents[0].Link" type="text" value="">
 
             <button type="submit" class="btn btn-light rounded-pill">Upload</button>
-
-
 
           </form>
 
@@ -108,7 +107,7 @@
                 name = document.getElementsByName('song')[i].value;
               }
             }
-            name = "./uploads/" + name;
+            name = "./public/uploads/" + name;
             document.getElementById("songselector").setAttribute("src", name);
             var x = document.getElementById("songselector");
             audio.load();
@@ -155,11 +154,11 @@
                   <div class="form-check">
                     <% files.forEach(function(file) { %>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                      <input type="radio" name="song" id="" <%=file%>" value="<%=file%>" onclick="selectSong()">
-                      <label class="text" class="col-sm-2">
+                      <div>
+                      <input type="radio" name="song" class="mr-2" id="<%=file%>" value="<%=file%>" onclick="selectSong()">
+                      <label class="text" class="col-sm-">
                         <%=file%>
-                      </label>
+                      </label></div>  
                       <div class="float-sm-right">
                         <a href="/delete/" <%= file %>"><button class="btn btn-danger" name="complete" value="0">
                             Delete
@@ -180,14 +179,16 @@
         </div>
       </div>
 
-      <div class="col-sm-6">
-        <textarea name="editor1"></textarea>
-        <script>
-          CKEDITOR.config.height = 500;
-          CKEDITOR.replace('editor1');
-        </script>
-
+      <div id="editor" class="col-6">
+        <p>This is the editor content.</p>
       </div>
+      <script type="text/javascript" src="ckeditor.js"></script>
+      <script>
+        
+        CKEDITOR.config.width = 700;
+        CKEDITOR.config.height = 500;
+        CKEDITOR.replace('editor');
+      </script>
 
       <div class="text-center col-sm-3">
         <div class="header">
@@ -201,7 +202,7 @@
     </div>
     <div class="row fixed-bottom bg-dark" style="height:60px">
       <audio controls="" id="audio" style="width: 100%">
-        <source id="songselector" src="./uploads/" <%=files[0]%>">
+        <source id="songselector" src="./public/uploads/" <%=files[0]%>">
       </audio>
     </div>
 
@@ -211,7 +212,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
   </script>
-  <script src="./js/player.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
