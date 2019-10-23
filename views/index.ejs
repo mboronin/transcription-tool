@@ -15,9 +15,9 @@
 
 <body>
   <!--container for the webpage -->
-  <div class="container-fluid" style="padding-right:0">
+  <div class="container-fluid" style="padding-right:0px; margin-right:0px;">
     <!-- creates the row of the header -->
-    <div class="row header">
+    <div class="row header" style="margin-right:0">
       <div class="col-12">
         <h1>Transcribe</h1>
         <p>For transcribing audio files</p>
@@ -25,7 +25,7 @@
     </div>
 
     <!-- creates the row containing the tools for the audio player -->
-    <div class="row tools">
+    <div class="row tools" style="margin-right:0">
       <div id=" audio-controls">
       <div class="form-inline">
 
@@ -165,11 +165,11 @@
       </script>
       <hr />
     </div>
-
+    </div>
 
     <div class="row" style="margin:0px">
 
-      <div class="col-sm-3">
+      <div class="col-sm-3" style="padding-left:0px">
 
         <div id="audio-player">
 
@@ -228,7 +228,7 @@
     </div>
 
 
-    <div class="row fixed-bottom header" style="height:60px">
+    <div class="row fixed-bottom header" style="height:60px; margin:0px;">
       <audio controls="" id="audio" style="width: 99%">
         <source id="songselector" src="./public/uploads/" <%=files[0]%>">
       </audio>
