@@ -25,8 +25,8 @@
     </div>
 
     <!-- creates the row containing the tools for the audio player -->
-    <div class="row tools
-      <div id=" audio-controls">
+    <div class="row tools">
+      <div id="audio-controls">
       <div class="form-inline">
 
         <!-- the form for uploading the audio files -->
@@ -144,7 +144,7 @@
     </div>
 
 
-    <div class="row" style="width:100%">
+    <div class="row">
 
       <div class="col-sm-3">
 
@@ -155,7 +155,7 @@
           <ul class="list-group">
             <div class="form-group row">
               <fieldset class="form-group">
-                <div class="row">
+                <div class="row" style="margin-right: 0px;">
 
                   <div class="form-check">
                     <% files.forEach(function(file) { %>
@@ -163,12 +163,12 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       <div>
                       <input type="radio" name="song" id="<%=file%>" value="<%=file%>" onclick="selectSong()"></div>
-                      <div>
+                      <div class="ml-2">
                       <label class="text" class="col-sm-2">
                         <%=file%>
                       </label></div>
                   <div class="float-sm-right">
-                    <a href="/delete/" <%= file %>"><button class="btn btn-danger" name="complete" value="0">
+                    <a href="/delete/<%=file%>"><button class="btn btn-danger" name="complete" value="0">
                         Delete
                       </button>
                     </a>
@@ -193,8 +193,8 @@
       </div>
       <script type="text/javascript" src="ckeditor.js"></script>
       <script>
-        CKEDITOR.config.width = 700;
-        CKEDITOR.config.height = 300;
+        CKEDITOR.config.width = screen.width/12*6 - 40;
+        CKEDITOR.config.height = 500;
         CKEDITOR.replace('editor');
       </script>
 
@@ -206,7 +206,7 @@
 
 
     <div class="row fixed-bottom header" style="height:60px">
-      <audio controls="" id="audio" style="width: 100%">
+      <audio controls="" id="audio" style="width: 99%">
         <source id="songselector" src="./public/uploads/" <%=files[0]%>">
       </audio>
     </div>
