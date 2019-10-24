@@ -81,9 +81,26 @@ app.get('./public/uploads', (req, res) => {
 });
 
 
+var dest = "./public/uploads"
+var url= ''
+function download(url, dest, callback) {
+  var file = fs.createWriteStream(dest);
+  var request = http.get(url, function (response) {
+    response.pipe(file);
+    file.on('finish', function () {
+      file.close(callback); // close() is async, call callback after close completes.
+    });
+    file.on('error', function (err) {
+      fs.unlink(dest); // Delete the file async. (But we don't check the result)
+      if (callback)
+        callback(err.message);
+    });
+  });
+}
+
 
 function remove(file) {
-    fs.unlinkSync('./public/uploads/' + file);
+    ls = fs.unlinkSync('./public/uploads/' + file);
 }
 
 app.get('/delete/:file', (req, res) => {
