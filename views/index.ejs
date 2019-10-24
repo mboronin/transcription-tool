@@ -2,137 +2,145 @@
 
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="/public/style.css">
-  <script type="text/javascript" src="ckeditor.js"></script>
-  <title>Transcribe</title>
-</head>
+  <head>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+          <link rel="stylesheet" href="/public/style.css">
+            <script type="text/javascript" src="ckeditor.js"></script>
+            <title>Transcribe</title>
+          </head>
 
 
-<body>
-  <!--container for the webpage -->
-  <div class="container-fluid" style="padding-right:0px; margin-right:0px;">
-    <!-- creates the row of the header -->
-    <div class="row header" style="margin-right:0">
-      <div class="col-12">
-        <h1>Transcribe</h1>
-        <p>For transcribing audio files</p>
-      </div>
-    </div>
-
-    <!-- creates the row containing the tools for the audio player -->
-    <div class="row tools" style="margin-right:0">
-      <div id=" audio-controls">
-      <div class="form-inline">
-
-        <!-- the form for uploading the audio files -->
-        <form method="POST" action="/upload" enctype="multipart/form-data">
-          <%= typeof msg != 'undefined' ? msg : '' %>
-
-          <input type="file" class="btn-light form-control-sm" name="files" id="exampleFormControlFile1" />
-
-          <input data-val-regex-pattern="^(https?://)?([\da-z\.-]+)\.([a-z\.]{2,6})([/\w\.-=?&amp;_]*)*/?$"
-            data-val="true" data-val-regex="Enter a valid web adress" id="Documents_0__Link" name="Documents[0].Link"
-            type="text" value="" placeholder="Paste URL here" class="btn-light form-control-sm">
-
-          <button type="submit" class="btn btn-light rounded-pill"><img src="public/images/Upload_1.png"
-              width="30"></img></button>
-        </form>
-
-        <!-- input to enter how many seconds the loop function should run -->
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Number of seconds to loop: </span>
-          </div>
-          <input class="form-control" size="1" type="text" id="loopy" value="5" />
+  <body>
+    <!--container for the webpage -->
+    <div class="container-fluid" style="padding-right:0px; margin-right:0px;">
+      <!-- creates the row of the header -->
+      <div class="row header" style="margin-right:0">
+        <div class="col-12">
+          <h1>Transcribe</h1>
+          <p>For transcribing audio files</p>
         </div>
-
-        <!-- buttons to start and stop the loop function -->
-        <button class="btn btn-light rounded-pill" onclick="loop_select()"><img src="public/images/Loop_1.png"
-            width="30"></img></button>
-        <button class="btn btn-light rounded-pill" onclick="loop_end()"><img src="public/images/Loop_4.png"
-            width="30"></img></button>
-
-        <!-- dropdown list to change the playback speed -->
-        <div class="dropdown">
-          <button class="btn btn-light dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Playback speed
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <option value="half" onclick="speed_half()"> 0,5x</option>
-            <option value="normal" onclick="speed_normal()">1x</option>
-            <option value="oneandhalf" onclick="speed_onehalf()"> 1.5x</option>
-            <option value="two" onclick="speed_two()"> 2x</option>
-          </div>
-        </div>
-
-        <!-- button for creating a timestamp -->
-        <button type="submit" class="btn btn-light rounded-pill" onclick="timestamp(editor)"><img src="public/images/timestamp_2.svg" width="30"></img></button>
-
-        <div class="dropdown">
-
-          <button class="btn btn-light dropdown-toggle rounded-pill" type="button" data-toggle="dropdown">
-            Keyboard shortcuts
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <label>Play: Shift + P </label>
-            <label>Pause: Shift + S </label>
-            <label>Start loop: Shift + C </label>
-            <label>End loop: Shift + F</label>
-          </div>
-        </div>
-        
       </div>
 
-      <!-- scripts for running the functionalities above -->
-      <script>
-        document.addEventListener("keyup", playpause, false);
-        // Keyboard shortcut for play and pause
-        function playpause(event) {
-        var x = event.keyCode;
-        if (x === 112 && event.shiftKey || x === 80 && event.shiftKey) {
-        audio.play();
+      <!-- creates the row containing the tools for the audio player -->
+      <div class="row tools" style="margin-right:0">
+        <div id=" audio-controls">
+          <div class="form-inline">
 
-        } else if (x === 115 && event.shiftkey || x === 83 && event.shiftKey) {
-        audio.pause();
-        }
-        }
+            <!-- the form for uploading the audio files -->
+            <form method="POST" action="/upload" enctype="multipart/form-data">
+              <%= typeof msg != 'undefined' ? msg : '' %>
 
-        document.addEventListener("keyup", startloopKb, false);
-        //Keyboardshortcut for repeat mode
-        function startloopKb(event) {
-        var x = event.keyCode;
-        if (x === 67 && event.shiftKey || x === 99 && event.shiftKey) {
-        loop_select();
+              <input type="file" class="btn-light form-control-sm" name="files" id="exampleFormControlFile1" />
 
-        } else if (x === 70 && event.shiftKey || x === 102 && event.shiftKey) {
-        loop_end();
-        }
-        }
+              <input data-val-regex-pattern="^(https?://)?([\da-z\.-]+)\.([a-z\.]{2,6})([/\w\.-=?&amp;_]*)*/?$"
+                data-val="true" data-val-regex="Enter a valid web adress" id="Documents_0__Link" name="Documents[0].Link"
+                type="text" value="" placeholder="Paste URL here" class="btn-light form-control-sm">
 
-        // Changing the playback speed -->
-        speed_half = function () {
-        audio.playbackRate = 0.5;
-        }
-        speed_normal = function () {
-        audio.playbackRate = 1;
-        }
-        speed_onehalf = function () {
-        audio.playbackRate = 1.5;
-        }
-        speed_two = function () {
-        audio.playbackRate = 2;
-        }
+                <button type="submit" class="btn btn-light rounded-pill">
+                  <img src="public/images/Upload_1.png"
+              width="30"></img>
+                </button>
+              </form>
 
-        // Play the selected file from the playlist -->
-        function selectSong() {
-        songs = document.getElementsByName('song');
-        for (i = 0; i < songs.length; i++) {
+            <!-- input to enter how many seconds the loop function should run -->
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Number of seconds to loop: </span>
+              </div>
+              <input class="form-control" size="1" type="text" id="loopy" value="5" />
+            </div>
+
+            <!-- buttons to start and stop the loop function -->
+            <button class="btn btn-light rounded-pill" onclick="loop_select()">
+              <img src="public/images/Loop_1.png"
+            width="30"></img>
+            </button>
+            <button class="btn btn-light rounded-pill" onclick="loop_end()">
+              <img src="public/images/Loop_4.png"
+            width="30"></img>
+            </button>
+
+            <!-- dropdown list to change the playback speed -->
+            <div class="dropdown">
+              <button class="btn btn-light dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Playback speed
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <option value="half" onclick="speed_half()"> 0,5x</option>
+                <option value="normal" onclick="speed_normal()">1x</option>
+                <option value="oneandhalf" onclick="speed_onehalf()"> 1.5x</option>
+                <option value="two" onclick="speed_two()"> 2x</option>
+              </div>
+            </div>
+
+            <!-- button for creating a timestamp -->
+            <button class="btn btn-light rounded-pill" onclick="stamp_time()">
+              <img src="public/images/timestamp_2.svg" width="30"></img>
+            </button>
+
+            <div class="dropdown">
+
+              <button class="btn btn-light dropdown-toggle rounded-pill" type="button" data-toggle="dropdown">
+                Keyboard shortcuts
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <label>Play: Shift + P </label>
+                <label>Pause: Shift + S </label>
+                <label>Start loop: Shift + C </label>
+                <label>End loop: Shift + F</label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- scripts for running the functionalities above -->
+          <script>
+            document.addEventListener("keyup", playpause, false);
+            // Keyboard shortcut for play and pause
+            function playpause(event) {
+            var x = event.keyCode;
+            if (x === 112 && event.shiftKey || x === 80 && event.shiftKey) {
+            audio.play();
+
+            } else if (x === 115 && event.shiftkey || x === 83 && event.shiftKey) {
+            audio.pause();
+            }
+            }
+
+            document.addEventListener("keyup", startloopKb, false);
+            //Keyboardshortcut for repeat mode
+            function startloopKb(event) {
+            var x = event.keyCode;
+            if (x === 67 && event.shiftKey || x === 99 && event.shiftKey) {
+            loop_select();
+
+            } else if (x === 70 && event.shiftKey || x === 102 && event.shiftKey) {
+            loop_end();
+            }
+            }
+
+            // Changing the playback speed -->
+            speed_half = function () {
+            audio.playbackRate = 0.5;
+            }
+            speed_normal = function () {
+            audio.playbackRate = 1;
+            }
+            speed_onehalf = function () {
+            audio.playbackRate = 1.5;
+            }
+            speed_two = function () {
+            audio.playbackRate = 2;
+            }
+
+            // Play the selected file from the playlist -->
+            function selectSong() {
+            songs = document.getElementsByName('song');
+            for (i = 0; i < songs.length; i++) {
             if (songs[i].checked) {
               name = document.getElementsByName('song')[i].value;
             }
@@ -166,101 +174,108 @@
           clearInterval(inter);
           inter = false;
         }
-       
+        
+              
+         stamp_time = function(editor) {
+          var dur = document.getElementById("audio");
+          var a = dur.currentTime;
+
+          timestamp = document.getElementById("editor");
+          timestamp.value += a;
+          }
           
-          
-        stamp = function (editor) {
-        var dur = document.getElementById("audio");
-        editor.addCommand('insertTimestamp', {
-            exec: function (editor) {
-                editor.insertHtml(dur);
-            }
-        });
-    }
-      </script>
-      <hr />
-    </div>
-    </div>
-
-    <div class="row" style="margin:0px">
-
-      <div class="col-sm-3" style="padding-left:0px">
-
-        <div id="audio-player">
-
-          <% if(files){ %>
-
-          <ul class="list-group">
-            <div class="form-group row">
-              <fieldset class="form-group">
-                <div class="row" style="margin-right:0px">
-
-                  <div class="form-check">
-                    <% files.forEach(function(file) { %>
-                      
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                      <input type="radio" name="song" id="<%=file%>" value="<%=file%>" onclick="selectSong()"></div>
-                      <div>
-                      <label class="text" class="col-sm-2">
-                        <%=file%>
-                      </label></div>
-                  <div class="float-sm-right">
-                    <a href="/delete/" <%= file %>"><button class="btn btn-danger" name="complete" value="0">
-                        Delete
-                      </button>
-                    </a>
-                  </div>
-                  </li>
-                  <% }); %>
-                </div>
-
-            </div>
-            </fieldset>
+              
+          </script>
+          <hr />
         </div>
-        </ul>
-        <% } else { %>
-        <p>No files to show</p>
-        <% } %>
       </div>
-    </div>
+
+      <div class="row" style="margin:0px">
+
+        <div class="col-sm-3" style="padding-left:0px">
+
+          <div id="audio-player">
+
+            <% if(files){ %>
+
+            <ul class="list-group">
+              <div class="form-group row">
+                <fieldset class="form-group">
+                  <div class="row" style="margin-right:0px">
+
+                    <div class="form-check">
+                      <% files.forEach(function(file) { %>
+
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                          <input type="radio" name="song" id=""<%=file%>" value="<%=file%>" onclick="selectSong()">
+                        </div>
+                        <div>
+                          <label class="text" class="col-sm-2">
+                            <%=file%>
+                          </label>
+                        </div>
+                        <div class="float-sm-right">
+                          <a href="/delete/"
+                            <%= file %>"><button class="btn btn-danger" name="complete" value="0">
+                              Delete
+                            </button>
+                          </a>
+                        </div>
+                      </li>
+                      <% }); %>
+                    </div>
+
+                  </div>
+                </fieldset>
+              </div>
+            </ul>
+            <% } else { %>
+            <p>No files to show</p>
+            <% } %>
+          </div>
+        </div>
 
 
-      <div id="editor" class="col-6" style="margin:0px">
-        <p>This is the editor content.</p>
+        <textarea id="editor" class="col-6" style="margin:0px">
+          <p>This is the editor content.</p>
+        </textarea>
+
+        <script type="text/javascript" src="ckeditor.js"></script>
+        <script>
+          CKEDITOR.config.width = ((screen.width/12)*6)-20;
+          CKEDITOR.config.height = 300;
+          CKEDITOR.replace('editor');
+
+
+          
+        </script>
+
+        <div class="text-center col-sm-3">
+          <h1>Bookmarks</h1>
+          <p>For creating bookmarks</p>
+        </div>
       </div>
-      <script type="text/javascript" src="ckeditor.js"></script>
-      <script>
-        CKEDITOR.config.width = ((screen.width/12)*6)-20;
-        CKEDITOR.config.height = 300;
-        CKEDITOR.replace('editor',{extraPlugins: 'timestamp'});
-      </script>
 
-      <div class="text-center col-sm-3">
-        <h1>Bookmarks</h1>
-        <p>For creating bookmarks</p>
+
+      <div class="row fixed-bottom header" style="height:60px; margin:0px;">
+        <audio controls="" id="audio" style="width: 99%">
+          <source id="songselector" src="./public/uploads/" <%=files[0]%>">
+        </audio>
       </div>
+
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
 
-    <div class="row fixed-bottom header" style="height:60px; margin:0px;">
-      <audio controls="" id="audio" style="width: 99%">
-        <source id="songselector" src="./public/uploads/" <%=files[0]%>">
-      </audio>
-    </div>
-
-  </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-  </script>
-
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-  </script>
-
-</body>
+  </body>
 
 </html>
