@@ -13,14 +13,27 @@ audio.pause();
 document.addEventListener("keyup", startloopKb, false);
 //Keyboardshortcut for repeat mode
 function startloopKb(event) {
-var x = event.keyCode;
-if (x === 67 && event.shiftKey || x === 99 && event.shiftKey) {
-loop_select();
+    var x = event.keyCode;
+    if (x === 67 && event.shiftKey || x === 99 && event.shiftKey) {
+        loop_select();
 
-} else if (x === 70 && event.shiftKey || x === 102 && event.shiftKey) {
-loop_end();
+    } else if (x === 70 && event.shiftKey || x === 102 && event.shiftKey) {
+        loop_end();
+    }
 }
+
+document.addEventListener("keyup", stamp_timeKb, false);
+//Keyboardshortcut for repeat mode
+function stamp_timeKb(event) {
+    var x = event.keyCode;
+    if (x === 84 && event.shiftKey || x === 116 && event.shiftKey) {
+        stamp_time();
+    }
 }
+
+
+
+
 
 // Changing the playback speed -->
 speed_half = function () {
@@ -74,12 +87,16 @@ clearInterval(inter);
 inter = false;
 }
 
-  
-stamp_time = function(editor) {
-var dur = document.getElementById("audio");
-var a = dur.currentTime;
+stamp_time = function () {
+    var time = document.getElementById("audio");
+    var cur_time = time.currentTime;
 
-timestamp = document.getElementById("editor");
-timestamp.value += a;
+    var date = new Date(null);
+    date.setSeconds(cur_time);
+    var formated_time = date.toISOString().substr(11, 8);
+
+    stamp = document.getElementById("editor");
+    stamp.value += formated_time + " ";
+
+    CKEDITOR.instances['editor'].setData(stamp);
 }
-
