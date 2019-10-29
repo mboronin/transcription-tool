@@ -90,6 +90,7 @@
               <label>Pause: Shift + S </label>
               <label>Start loop: Shift + C </label>
               <label>End loop: Shift + F</label>
+              <label>Timestamp: Shift + T</label>
             </div>
           </div>
 
@@ -181,17 +182,36 @@
       </script>
 
       <div class="text-center col-sm-3">
-        <h1>Bookmarks</h1>
-        <p>For creating bookmarks</p>
+          <div id="myDIV" class="header">
+            <h1>Bookmarks</h1>
+            <input type="text" id="myInput" placeholder="Title...">
+            <span onclick="newElement()" class="addBtn">Add</span>
+          </div>
+          
+          <ul id="myUL">
+          </ul> 
+
+      </div>
+
+
+
+
+
+      <div class="row">
+        <div class="list-group" id="bookies">
+
+        </div>
+
       </div>
     </div>
+  </div>
 
 
-    <div class="row fixed-bottom header margin-zero">
-      <audio controls id="audio">
-        <source id="songselector" src="./public/uploads/" <%=files[0]%>">
-      </audio>
-    </div>
+  <div class="audio-wrapper row fixed-bottom header margin-zero">
+    <audio controls id="audio">
+      <source id="songselector" src="./public/uploads/" <%=files[0]%>">
+    </audio>
+  </div>
 
   </div>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
