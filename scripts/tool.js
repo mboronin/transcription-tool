@@ -52,19 +52,47 @@ function selectSong() {
   for (i = 0; i < songs.length; i++) {
     if (songs[i].checked) {
       name = document.getElementsByName('song')[i].value;
+    } else {
+      songs[i].checked = false;
     }
   }
+  console.log(songs)
   name = "./public/uploads/" + name;
   document.getElementById("songselector").setAttribute("src", name);
-  var x = document.getElementById("songselector");
   audio.load();
   audio.play();
+  var sli = document.getElementById("slider");
+  if (sli.checked == true) {
+    var iter = 0
+    var audio1 = document.getElementById("audio");
+    audio1.onended = function () {
+      for (i = 0; i < songs.length - 1; i++) {
+        if (songs[i].checked) {
+          console.log(i)
+          console.log(songs.length)
+          iter = i + 1;
+          songs[i].checked = false;
+          j = i + 1;
+          songs[j].checked = true;
+          break;
+        }
+      }
+      console.log("hey before if")
+      console.log(iter)
+      if (iter != songs.length) {
+        selectSong()
+        console.log("hey inside if")
+      } else {
+        audio.pause();
+        console.log("hey inside else")
+      }
+    
+  }
+};
 }
 
 // Get the selected time to loop and start -->
 loop_select = function () {
-
-
   var dur = document.getElementById("audio");
   var loopy_value = document.getElementById('loopy').value
   var loopy_int = loopy_value * 1000;
@@ -192,7 +220,7 @@ list.addEventListener('click', function (ev) {
 function newElement() {
   var li = document.createElement("li");
   var inputValue = document.getElementById("myInput").value;
-  li.innerHTML= '<a href=#' + inputValue + '>' + inputValue + '</a>'
+  li.innerHTML = '<a href=#' + inputValue + '>' + inputValue + '</a>'
   var tobeins = document.createElement("p");
   tobeins.setAttribute("id", inputValue);
   tobeins.innerHTML = '[[' + inputValue + ']]'
