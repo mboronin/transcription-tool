@@ -126,7 +126,7 @@
                         </label>
                       </div>
                       <div class="float-sm-right">
-                        <a href="/delete/" <%= file %>"><button class="btn btn-danger" name="complete" value="0">
+                        <a href="/delete/<%=file%>"><button class="btn btn-danger" name="complete" value="0">
                             Delete
                           </button>
                         </a>
@@ -158,8 +158,23 @@
       </script>
 
       <div class="text-center col-sm-3">
+        <div class="row">
         <h1>Bookmarks</h1>
-        <p>For creating bookmarks</p>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Name of bookmark: </span>
+            </div>
+            <input class="form-control" size="1" type="text" id="mark"/>
+          </div>
+          <button class="btn btn-light rounded-pill" onclick="bookmark">   
+          </button>
+        </div>
+        <div class="row">
+          <div class="list-group" id="bookies">
+
+          </div>
+          
+        </div>
       </div>
     </div>
 
