@@ -125,7 +125,7 @@
                         </label>
                       </div>
                       <div class="float-sm-right">
-                        <a href="/delete/" <%= file %>"><button class="btn btn-danger" name="complete" value="0">
+                        <a href="/delete/<%=file%>"><button class="btn btn-danger" name="complete" value="0">
                             Delete
                           </button>
                         </a>
@@ -153,7 +153,31 @@
       <script>
         CKEDITOR.config.width = ((screen.width / 12) * 6) - 20;
         CKEDITOR.config.height = 300;
-        CKEDITOR.replace('editor');
+        CKEDITOR.replace('editor', {
+          extraPlugins: 'autocomplete,textmatch,toolbar,wysiwygarea,basicstyles,link,undo,placeholder',
+
+          on: {
+            instanceReady: function (evt) {
+              var itemTemplate = '<li data-id="{id}">' +
+                '<div><strong class="item-title">{title}</strong></div>' +
+                '<div><i>{description}</i></div>' +
+                '</li>',
+                outputTemplate = '{title}<span>&nbsp;</span>';
+
+              var autocomplete = new CKEDITOR.plugins.autocomplete(evt.editor, {
+                textTestCallback: textTestCallback,
+                dataCallback: dataCallback,
+                itemTemplate: itemTemplate,
+                outputTemplate: outputTemplate
+              });
+
+              // Override default getHtmlToInsert to enable rich content output.
+              autocomplete.getHtmlToInsert = function (item) {
+                return this.outputTemplate.output(item);
+              }
+            }
+          }
+        });
       </script>
 
       <div class="text-center col-sm-3">
